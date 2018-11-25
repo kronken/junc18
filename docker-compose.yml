@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  postgis:
+    image: mdillon/postgis
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+    expose:
+    - 5432
+    ports:
+    - 5432:5432
+  graphql:
+    image: graphile/postgraphile
+    restart: always
+    command: --connection postgres://postgres:postgres@postgis:5432/postgres --schema public --cors
+    ports:
+    - 5000:5000
